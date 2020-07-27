@@ -26,7 +26,7 @@ public class GraphController {
         Process p= e.execute("loadData.py "+nDays);
         Reader r=new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
         Graph g= r.readHistoricData(p);
-
+        System.out.println(g);
         return g;
 
     }

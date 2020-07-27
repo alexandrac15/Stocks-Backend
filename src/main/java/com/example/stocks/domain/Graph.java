@@ -6,21 +6,21 @@ import java.util.List;
 public class Graph {
 
 
-    private List<Pair> domain;
+    private List<Pair> series;
 
     public Graph(){
-        this.domain=new ArrayList<>();
+        this.series=new ArrayList<>();
     }
     public Graph(List<Float> priceValues){}
 
-    public List<Pair> getDomain() {
-        return domain;
+    public List<Pair> getSeries() {
+        return series;
     }
 
     @Override
     public String toString() {
         return "Graph{" +
-                "domain=" + domain+
+                "series=" + series+
                 '}';
     }
 }

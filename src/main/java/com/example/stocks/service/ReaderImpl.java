@@ -31,7 +31,7 @@ public class ReaderImpl implements Reader {
         while ((s = stdInput.readLine()) != null) {
             s1=s.substring(1);
               arr=s1.split("  ");
-              g.getDomain().add(new Pair(arr[0],arr[1]));
+              g.getSeries().add(new Pair(arr[0],arr[1]));
 
         }
 
