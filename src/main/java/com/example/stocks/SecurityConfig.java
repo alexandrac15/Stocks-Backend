@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CustomAuthenticationSuccessHandler successHandler;
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
+        http.csrf().disable();
        // http.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                // .authorizeRequests().anyRequest();
                 //.antMatchers("/logout_success")
