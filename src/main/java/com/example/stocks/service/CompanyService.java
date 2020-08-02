@@ -13,8 +13,10 @@ public class CompanyService {
     private CompanyRepository companyRepository;
 
 
+
     public Company addCompany( Company company){
         System.out.println("hey" +company);
+
          return companyRepository.save(company);
     }
     public Company getCompanyById(int id){

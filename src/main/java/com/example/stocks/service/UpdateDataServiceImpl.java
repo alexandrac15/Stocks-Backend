@@ -30,8 +30,11 @@ public class UpdateDataServiceImpl implements UpdateDataService {
     @Override
     public int appendLastTradingDay(String symbol) throws IOException {
         //for existing files the last trading day is appended
-        try{
-        Process p = executor.execute("companyData12.py "+symbol);}
+        try {
+
+            Process p = executor.execute("FileUpdate.py " + symbol);
+        }
+
         catch(Exception e){
             emailService.sendEmailToAdmin(e.getMessage());
         }

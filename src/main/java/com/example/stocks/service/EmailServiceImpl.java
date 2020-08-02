@@ -63,6 +63,7 @@ public class EmailServiceImpl implements EmailService {
         Session session = Session.getInstance(props, auth);
 
         this.sendEmail(session, toEmail,"Know Your Stocks "+"ERROR", message);
+        System.out.println("SEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEnT");
 
     }
 

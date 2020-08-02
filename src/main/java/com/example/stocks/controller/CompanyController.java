@@ -72,7 +72,7 @@ public class CompanyController {
     }
 
     @PostMapping("/err")
-    void fun() throws IOException {
+    void fun() throws IOException, InterruptedException {
         UpdateDataService im=new UpdateDataServiceImpl (new EmailServiceImpl(),new ExecutorImpl()) ;
         im.appendLastTradingDay("ceva");
     }
