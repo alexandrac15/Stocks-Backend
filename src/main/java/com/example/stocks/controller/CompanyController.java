@@ -26,10 +26,10 @@ public class CompanyController {
     @Autowired
     private CompanyService companyservice;
 
-    @PostMapping("/companies")
-    Company addCompany(@RequestBody Company company) {
-        return companyservice.addCompany(company);
-    }
+//    @PostMapping("/companies")
+//    Company addCompany(@RequestBody Company company) throws IOException {
+//        return companyservice.addCompany(company);
+//    }
 
     // Single item
 
@@ -52,29 +52,17 @@ public class CompanyController {
 
     }
 
-    @PostMapping("/companiestest/{symbol}")
-    Company addCompany1(@PathVariable String  symbol) throws IOException {
-        Gson g = new Gson();
-//        Company company = new Company("companie test1j");
-//        String s = "{ name : " + "\"companie chiar din string\" }";
-//
-//        Company c1 = g.fromJson(s, Company.class);
-
-        ExecutorImpl e = new ExecutorImpl();
-
-        Process p = e.execute("companyData.py "+symbol);
-        ReaderImpl r = new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
-        String  str = r.readConsoleOutput(p);
-
-        Company c1 = g.fromJson(str, Company.class);
-        System.out.println(c1);
-        return companyservice.addCompany(c1);
+    @PostMapping("/companies/{symbol}")
+    Company addCompany(@PathVariable String  symbol) throws IOException {
+         Company c=UpdateDataServiceImpl.getCompanyData( symbol);
+         UpdateDataServiceImpl.getHistoricalData(symbol);
+        return companyservice.addCompany(c); //adauga in vbaza
     }
 
     @PostMapping("/err")
     void fun() throws IOException, InterruptedException {
-        UpdateDataService im=new UpdateDataServiceImpl (new EmailServiceImpl(),new ExecutorImpl()) ;
-        im.appendLastTradingDay("ceva");
+
+        UpdateDataServiceImpl.appendLastTradingDay("ceva");
     }
 
 

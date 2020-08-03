@@ -8,9 +8,9 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl  {
 
-    public void sendEmail(Session session, String toEmail, String subject, String body){
+    public static  void sendEmail(Session session, String toEmail, String subject, String body){
         try
         {
             MimeMessage msg = new MimeMessage(session);
@@ -41,7 +41,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-    public  void sendEmailToAdmin(String message) {
+    public static  void sendEmailToAdmin(String message) {
         final String fromEmail = "knowyourstocks.sys@gmail.com";
         final String password = "know1937qwm$A";
 
@@ -62,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
         };
         Session session = Session.getInstance(props, auth);
 
-        this.sendEmail(session, toEmail,"Know Your Stocks "+"ERROR", message);
+        EmailServiceImpl.sendEmail(session, toEmail,"Know Your Stocks "+"ERROR", message);
         System.out.println("SEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEnT");
 
     }

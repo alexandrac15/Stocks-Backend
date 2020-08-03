@@ -10,6 +10,9 @@ public class Company {
     private int id;
     @Column(name = "companyName")
     private String companyName;
+    @Column(name = "symbol")
+    private String symbol;
+
     @Column(name = "employees")
     private int employees;
     @Column(name = "industry")
@@ -26,6 +29,14 @@ public class Company {
     private String  country;
 
     public Company() {
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public int getId() {
