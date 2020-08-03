@@ -41,7 +41,7 @@ public class CompanyController {
 
     @GetMapping("/home")
     Graph getCompany() throws IOException, ParseException {
-
+        //asta va fi cu permisiion
         ExecutorImpl e = new ExecutorImpl();
 
         Process p = e.execute("loadData.py 5");
