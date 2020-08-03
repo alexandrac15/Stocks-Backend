@@ -22,8 +22,8 @@ public class GraphController {
     @GetMapping("/graph/{nDays}")
     Graph getGraph(@PathVariable int nDays) throws IOException, ParseException {
         //historical graph
-        Executor e = new ExecutorImpl();
-        Process p= e.execute("loadData.py "+nDays);
+
+        Process p= ExecutorImpl.execute("loadData.py "+nDays);
         Reader r=new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
         Graph g= r.readHistoricData(p);
         System.out.println(g);
