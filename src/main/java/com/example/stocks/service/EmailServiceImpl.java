@@ -42,10 +42,10 @@ public class EmailServiceImpl  {
 
 
     public static  void sendEmailToAdmin(String message) {
-        final String fromEmail = "knowyourstocks.sys@gmail.com";
-        final String password = "know1937qwm$A";
+        final String fromEmail = "@gmail.com";
+        final String password = "k";
 
-        final String toEmail = "alialexandra.cornea@gmail.com";
+        final String toEmail = "@gmail.com";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host

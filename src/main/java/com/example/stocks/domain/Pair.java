@@ -1,50 +1,45 @@
 package com.example.stocks.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 
 public class Pair {
 //    @JsonSerialize(as = Date.class)
 ////    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
    // @DateTimeFormat(pattern="dd/MM/yyyy")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date date;
-    private Float price;
+    private Date name;
+    private Float value;
 
    public Pair(){}
 
-    public Pair(Date date, Float price) {
-        this.date = date;
-        this.price = price;
+    public Pair(Date name, Float value) {
+        this.name = name;
+        this.value = value;
     }
-    public Pair(String date, String price) throws ParseException {
-        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        this.date =date1 ;
-        this.price = Float.parseFloat(price);
+    public Pair(String name, String value) throws ParseException {
+        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(name);
+        this.name =date1 ;
+        this.value = Float.parseFloat(value);
     }
   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    public Date getDate() {
-        return date;
+    public Date getName() {
+        return name;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setName(Date name) {
+        this.name = name;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getValue() {
+        return value;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setValue(Float value) {
+        this.value = value;
     }
 
     @Override
@@ -52,8 +47,8 @@ public class Pair {
         SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 
         return "Pair{" +
-                "date=" + date +
-                ", price=" + price +
+                "name=" + name +
+                ", value=" + value +
                 '}';
     }
 }
