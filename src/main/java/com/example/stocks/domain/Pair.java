@@ -47,8 +47,10 @@ public class Pair {
         SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 
         return "Pair{" +
+
                 "name=" + name +
                 ", value=" + value +
+
                 '}';
     }
 }

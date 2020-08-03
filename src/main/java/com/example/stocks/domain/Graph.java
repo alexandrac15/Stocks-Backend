@@ -21,6 +21,6 @@ public class Graph {
     public String toString() {
         return "Graph{" +
                 "series=" + series+
-                '}';
+                '}';//hey
     }
 }
