@@ -31,7 +31,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity(debug = true)
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfigvechi extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomOidcUserService oidcUserService;
 
