@@ -7,19 +7,24 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    @Column(name = "id")
+    int id;
+    @Column(name="googleUserId")
+    private String googleUserId;
     @Column(name = "name")
     private String name;
     @Column(name = "email")
     private String email;
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
+
 
     public User() {
+    }
+
+    public User(String googleUserId, String name, String email) {
+        this.googleUserId = googleUserId;
+        this.name = name;
+        this.email = email;
     }
 
     public int getId() {
@@ -30,6 +35,14 @@ public class User {
         this.id = id;
     }
 
+    public String getGoogleUserId() {
+        return googleUserId;
+    }
+
+    public void setGoogleUserId(String googleUserId) {
+        this.googleUserId = googleUserId;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,20 +51,21 @@ public class User {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", googleUserId='" + googleUserId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
