@@ -34,6 +34,7 @@ public class UserController {
         return  ur.save(u);
     }
 
+    
     @GetMapping("/users")
     User getUsers(){
 
