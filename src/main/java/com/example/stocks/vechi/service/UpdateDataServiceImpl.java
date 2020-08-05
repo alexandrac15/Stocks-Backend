@@ -1,12 +1,9 @@
-package com.example.stocks.service;
+package com.example.stocks.vechi.service;
 
-import com.example.stocks.domain.Company;
-import com.example.stocks.repository.CompanyRepository;
+import com.example.stocks.vechi.domain.Company;
+import com.example.stocks.vechi.repository.CompanyRepository;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import utilities.EmailService;
-import utilities.Executor;
-import utilities.UpdateDataService;
 
 import java.io.IOException;
 

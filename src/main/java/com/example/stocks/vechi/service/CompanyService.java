@@ -1,10 +1,9 @@
-package com.example.stocks.service;
+package com.example.stocks.vechi.service;
 
-import com.example.stocks.repository.CompanyRepository;
+import com.example.stocks.vechi.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.example.stocks.domain.Company;
-import org.springframework.stereotype.Service;
+import com.example.stocks.vechi.domain.Company;
 
 import java.io.IOException;
 

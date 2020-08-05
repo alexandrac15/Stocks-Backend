@@ -1,4 +1,4 @@
-package com.example.stocks.domain;
+package com.example.stocks.vechi.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

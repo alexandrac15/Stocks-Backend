@@ -1,13 +1,12 @@
-package com.example.stocks.service;
+package com.example.stocks.vechi.service;
 
-import com.example.stocks.domain.Graph;
-import com.example.stocks.domain.Pair;
+import com.example.stocks.vechi.domain.Graph;
+import com.example.stocks.vechi.domain.Pair;
 import utilities.Reader;
 
 import java.io.*;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Scanner;
 
 public class ReaderImpl implements Reader {
 

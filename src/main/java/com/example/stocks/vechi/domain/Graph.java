@@ -1,4 +1,4 @@
-package com.example.stocks.domain;
+package com.example.stocks.vechi.domain;
 
 import java.util.ArrayList;
 import java.util.List;

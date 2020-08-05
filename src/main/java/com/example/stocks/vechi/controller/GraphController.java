@@ -1,13 +1,12 @@
-package com.example.stocks.controller;
+package com.example.stocks.vechi.controller;
 
-import com.example.stocks.domain.Graph;
-import com.example.stocks.service.ExecutorImpl;
-import com.example.stocks.service.ReaderImpl;
+import com.example.stocks.vechi.domain.Graph;
+import com.example.stocks.vechi.service.ExecutorImpl;
+import com.example.stocks.vechi.service.ReaderImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import utilities.Executor;
 import utilities.Reader;
 
 import java.io.IOException;

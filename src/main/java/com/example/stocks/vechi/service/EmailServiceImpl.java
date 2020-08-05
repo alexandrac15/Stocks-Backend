@@ -1,6 +1,4 @@
-package com.example.stocks.service;
-
-import utilities.EmailService;
+package com.example.stocks.vechi.service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

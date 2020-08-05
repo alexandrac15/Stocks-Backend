@@ -7,6 +7,7 @@ import com.example.stocks.service.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import utilities.Reader;
 import utilities.UpdateDataService;
 
 import javax.mail.Authenticator;
@@ -25,12 +26,13 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyservice;
-
+    private Reader ds=new ReaderImpl();
 //    @PostMapping("/companies")
 //    Company addCompany(@RequestBody Company company) throws IOException {
 //        return companyservice.addCompany(company);
 //    }
-    
+
+
 
     // Single item
 

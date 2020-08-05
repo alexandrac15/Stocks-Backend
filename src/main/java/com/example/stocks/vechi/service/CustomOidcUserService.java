@@ -1,7 +1,7 @@
-package com.example.stocks.service;
+package com.example.stocks.vechi.service;
 
-import com.example.stocks.domain.User;
-import com.example.stocks.repository.UserRepository;
+import com.example.stocks.vechi.domain.User;
+import com.example.stocks.vechi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
