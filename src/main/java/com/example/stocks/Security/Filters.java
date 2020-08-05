@@ -39,7 +39,7 @@ public class Filters {
     public FilterRegistrationBean restRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(restFilter);
-        filterRegistrationBean.setUrlPatterns(Collections.singletonList("/controller/*"));
+        filterRegistrationBean.setUrlPatterns(Collections.singletonList("/users/*"));
         return filterRegistrationBean;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity(debug = true) // < poti scoate debug ul, e folositor cateodata dar daca vrei sa dai deploy la app trebuie sa il scoti
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -18,13 +18,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Configurarile de spring security, nimic interesant
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
+               .cors()
                 .and()
                 .csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .antMatchers("/controller/all").permitAll()
+                .antMatchers("/users").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated();
     }
