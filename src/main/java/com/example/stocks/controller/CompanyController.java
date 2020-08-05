@@ -1,23 +1,18 @@
 package com.example.stocks.controller;
 
+import com.example.stocks.dataManagement.UpdateDataServiceImpl;
 import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Graph;
-import com.example.stocks.service.*;
 
-import com.google.gson.Gson;
+import com.example.stocks.services.CompanyService;
+import com.example.stocks.vechi.service.ExecutorImpl;
+import com.example.stocks.vechi.service.ReaderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import utilities.Reader;
-import utilities.UpdateDataService;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import java.io.IOException;
-
-
 import java.text.ParseException;
-import java.util.Properties;
 
 @RestController
 @CrossOrigin(origins = "*")

@@ -1,6 +1,6 @@
-package com.example.stocks.vechi.controller;
+package com.example.stocks.controller;
 
-import com.example.stocks.vechi.domain.Graph;
+import com.example.stocks.domain.Graph;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;

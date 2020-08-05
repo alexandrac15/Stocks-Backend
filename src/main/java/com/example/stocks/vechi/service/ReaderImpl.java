@@ -1,7 +1,7 @@
 package com.example.stocks.vechi.service;
 
-import com.example.stocks.vechi.domain.Graph;
-import com.example.stocks.vechi.domain.Pair;
+import com.example.stocks.domain.Graph;
+import com.example.stocks.domain.Pair;
 import utilities.Reader;
 
 import java.io.*;

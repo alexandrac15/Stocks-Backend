@@ -1,4 +1,4 @@
-package com.example.stocks.vechi.service;
+package com.example.stocks.notification;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

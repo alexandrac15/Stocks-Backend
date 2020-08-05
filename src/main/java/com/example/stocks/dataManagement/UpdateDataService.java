@@ -1,4 +1,4 @@
-package utilities;
+package com.example.stocks.dataManagement;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package com.example.stocks.vechi.repository;
+package com.example.stocks.repositories;
 
-import com.example.stocks.vechi.domain.Company;
+import com.example.stocks.domain.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

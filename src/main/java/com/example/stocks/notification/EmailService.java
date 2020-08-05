@@ -1,4 +1,4 @@
-package utilities;
+package com.example.stocks.notification;
 
 import javax.mail.Session;
 

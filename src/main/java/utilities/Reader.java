@@ -1,6 +1,6 @@
 package utilities;
 
-import com.example.stocks.vechi.domain.Graph;
+import com.example.stocks.domain.Graph;
 
 import java.io.IOException;
 import java.text.ParseException;

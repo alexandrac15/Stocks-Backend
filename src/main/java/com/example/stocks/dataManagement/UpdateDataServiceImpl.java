@@ -1,7 +1,10 @@
-package com.example.stocks.vechi.service;
+package com.example.stocks.dataManagement;
 
-import com.example.stocks.vechi.domain.Company;
-import com.example.stocks.vechi.repository.CompanyRepository;
+import com.example.stocks.domain.Company;
+import com.example.stocks.notification.EmailServiceImpl;
+import com.example.stocks.repositories.CompanyRepository;
+import com.example.stocks.vechi.service.ExecutorImpl;
+import com.example.stocks.vechi.service.ReaderImpl;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 
