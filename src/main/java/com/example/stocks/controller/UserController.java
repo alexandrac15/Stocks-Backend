@@ -1,7 +1,7 @@
 package com.example.stocks.controller;
 
 import com.example.stocks.domain.User;
-import com.example.stocks.repository.UserRepository;
+import com.example.stocks.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

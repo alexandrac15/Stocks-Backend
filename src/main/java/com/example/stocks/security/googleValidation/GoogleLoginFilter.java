@@ -3,7 +3,7 @@ package com.example.stocks.security.googleValidation;
 
 import com.example.stocks.security.backendToken.ApplicationTokenProvider;
 import com.example.stocks.domain.User;
-import com.example.stocks.repository.UserRepository;
+import com.example.stocks.repositories.UserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

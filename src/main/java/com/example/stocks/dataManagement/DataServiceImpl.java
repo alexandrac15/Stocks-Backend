@@ -7,10 +7,16 @@ import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
+import java.util.List;
 
-public class UpdateDataServiceImpl  {
+@Configuration
+@EnableScheduling
+public class DataServiceImpl {
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -18,12 +24,22 @@ public class UpdateDataServiceImpl  {
 
 
 
-    public UpdateDataServiceImpl() {
+    public DataServiceImpl() {
 
 
     }
+    @Scheduled(cron = "10 13 11 * * 1-6")
+    public void scheduledexec() throws IOException {
+        System.out.println("S-A EXECUTAT ");
+        List<Company> symbols=companyRepository.findAll();
+        //ia din baza de date toate companiile, ca sq stie ce fisiere trebuie sa updateze. ficare companie din db
+        // are un fisier in folderul historical_data
+        for (Company company: symbols){
+            ExecutorImpl.execute("FileUpdate.py "+company.getSymbol());
+        }
 
 
+    }
     public static int getHistoricalData(String symbol) throws IOException {
         //when a new company is added to the db this is called
         Process p = ExecutorImpl.execute("aquisition.py " + symbol);

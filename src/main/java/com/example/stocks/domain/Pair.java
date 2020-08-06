@@ -21,7 +21,7 @@ public class Pair {
         this.value = value;
     }
     public Pair(String name, String value) throws ParseException {
-        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(name);
+        Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(name);
         this.name =date1 ;
         this.value = Float.parseFloat(value);
     }

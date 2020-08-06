@@ -1,6 +1,6 @@
 package com.example.stocks.controller;
 
-import com.example.stocks.dataManagement.UpdateDataServiceImpl;
+import com.example.stocks.dataManagement.DataServiceImpl;
 import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Graph;
 
@@ -16,7 +16,12 @@ import java.text.ParseException;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class CompanyController {
+public class
+
+
+
+
+CompanyController {
 
 
     @Autowired
@@ -52,15 +57,15 @@ public class CompanyController {
 
     @PostMapping("/companies/{symbol}")
     Company addCompany(@PathVariable String  symbol) throws IOException {
-         Company c=UpdateDataServiceImpl.getCompanyData( symbol);
-         UpdateDataServiceImpl.getHistoricalData(symbol);
+         Company c= DataServiceImpl.getCompanyData( symbol);
+         DataServiceImpl.getHistoricalData(symbol);
         return companyservice.addCompany(c); //adauga in vbaza
     }
 
     @PostMapping("/err")
     void fun() throws IOException, InterruptedException {
 
-        UpdateDataServiceImpl.appendLastTradingDay("ceva");
+        DataServiceImpl.appendLastTradingDay("ceva");
     }
 
 

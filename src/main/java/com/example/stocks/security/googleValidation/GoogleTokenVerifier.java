@@ -24,7 +24,7 @@ public class GoogleTokenVerifier {
 
     // CLIENT_ID este ID ul aplicatiei tale din consola de https://console.developers.google.com/
     // La Credentials > OAuth 2.0 Client IDs
-    private static final String CLIENT_ID = "395904016915-pun4nvj39b0fqevf1jp3bmlktt4m2ah4.apps.googleusercontent.com" ;
+    private static final String CLIENT_ID = "" ;
 
     // Serviciul dat de Google pentru validarea tokenurilor lor
     GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
