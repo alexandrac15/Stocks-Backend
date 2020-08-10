@@ -21,12 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .cors()
                 .and()
                 .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .antMatchers("/users").permitAll()
-                .antMatchers("/companies/*").permitAll()
-                .anyRequest().authenticated();
+                .disable();
+                //.authorizeRequests()
+              //  .antMatchers(HttpMethod.POST,"/login").permitAll()
+               // .antMatchers("/users").permitAll()
+               // .antMatchers("/companies/*").permitAll()
+              //  .anyRequest().authenticated();
     }
 
     @Bean

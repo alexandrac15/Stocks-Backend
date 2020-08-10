@@ -2,6 +2,7 @@ package com.example.stocks.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -30,8 +31,9 @@ public class Company {
     private String CEO;
 
 
-    @ManyToOne(targetEntity=Sector.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="sector")//Optional
+    @ManyToOne( fetch = FetchType.LAZY)
+
+   @JsonBackReference
     private Sector  sector;
     @Column(name = "country")
     private String  country;
@@ -114,7 +116,7 @@ public class Company {
     public void setCEO(String CEO) {
         this.CEO = CEO;
     }
-    @JsonBackReference
+
     public Sector getSector() {
         return sector;
     }

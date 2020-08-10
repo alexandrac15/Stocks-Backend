@@ -5,6 +5,7 @@ import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Graph;
 
 import com.example.stocks.domain.Sector;
+import com.example.stocks.repositories.CompanyRepository;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
@@ -35,14 +36,18 @@ CompanyController {
 //    }
     @Autowired
     private DataServiceImpl dataService;
-
+      @Autowired
+      private CompanyRepository  cr;
 
 
     // Single item
 
     @GetMapping("/companies/{id}")
     Company getCompany(@PathVariable int id) {
-        return companyservice.getCompanyById(id);
+       // return companyservice.getCompanyById(id);
+        Company c=cr.findById(id).get();
+        return c;
+
 
     }
     @GetMapping("/sectors")
@@ -67,7 +72,7 @@ CompanyController {
     @PostMapping("/companies/{symbol}")
     Company addCompany(@PathVariable String  symbol) throws IOException {
          Company c= dataService.getCompanyData( symbol);
-         DataServiceImpl.getHistoricalData(symbol);
+        // DataServiceImpl.getHistoricalData(symbol);
         return companyservice.addCompany(c); //adauga in vbaza
     }
 

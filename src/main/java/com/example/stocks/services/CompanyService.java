@@ -22,7 +22,7 @@ public class CompanyService {
 
     public Company addCompany( Company company) throws IOException {
         System.out.println("hey" +company);
-         ExecutorImpl.execute("C:\\Users\\aalex\\source\\repos\\DataTest\\aquisition.py");
+
          return companyRepository.save(company);
     }
     public Company getCompanyById(int id){
