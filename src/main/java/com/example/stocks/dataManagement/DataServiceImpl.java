@@ -1,8 +1,10 @@
 package com.example.stocks.dataManagement;
 
 import com.example.stocks.domain.Company;
+import com.example.stocks.domain.Sector;
 import com.example.stocks.notification.EmailServiceImpl;
 import com.example.stocks.repositories.CompanyRepository;
+import com.example.stocks.repositories.SectorRepository;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import com.google.gson.Gson;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import utilities.CompanyDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +23,8 @@ public class DataServiceImpl {
 
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private SectorRepository sectorRepository;
 
 
 
@@ -28,7 +33,7 @@ public class DataServiceImpl {
 
 
     }
-    @Scheduled(cron = "10 13 11 * * 1-6")
+    @Scheduled(cron = "10 22 18 * * 1-7")
     public void scheduledexec() throws IOException {
         System.out.println("S-A EXECUTAT ");
         List<Company> symbols=companyRepository.findAll();
@@ -37,7 +42,7 @@ public class DataServiceImpl {
         for (Company company: symbols){
             ExecutorImpl.execute("FileUpdate.py "+company.getSymbol());
         }
-
+        System.out.println("S-A EXECUTAT ");
 
     }
     public static int getHistoricalData(String symbol) throws IOException {
@@ -45,14 +50,17 @@ public class DataServiceImpl {
         Process p = ExecutorImpl.execute("aquisition.py " + symbol);
         return 0;
     }
-    public static Company getCompanyData(String symbol) throws IOException {
+    public  Company getCompanyData(String symbol) throws IOException {
 
         Gson g = new Gson();
         Process p = ExecutorImpl.execute("companyData.py "+symbol); //ia datele din api
         ReaderImpl r = new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
         String  str = r.readConsoleOutput(p);
-        Company c1 = g.fromJson(str, Company.class); //formeaza obiectul din outputul procesului
-        return c1;
+        CompanyDTO c1 = g.fromJson(str, CompanyDTO.class); //formeaza obiectul din outputul procesului
+        String strs = c1.getSector();
+        Sector s= sectorRepository.findBySector(strs).get(0);
+        Company cy=new Company(c1.getCompanyName(),c1.getSymbol(),c1.getEmployees(),c1.getIndustry(),c1.getWebsite(),c1.getDescription(),c1.getCEO(),s,c1.getCountry());
+        return cy;
     }
 
     public static  int appendLastTradingDay(String symbol) throws IOException {

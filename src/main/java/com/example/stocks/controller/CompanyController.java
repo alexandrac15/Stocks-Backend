@@ -4,6 +4,7 @@ import com.example.stocks.dataManagement.DataServiceImpl;
 import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Graph;
 
+import com.example.stocks.domain.Sector;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
@@ -13,6 +14,7 @@ import utilities.Reader;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -31,6 +33,8 @@ CompanyController {
 //    Company addCompany(@RequestBody Company company) throws IOException {
 //        return companyservice.addCompany(company);
 //    }
+    @Autowired
+    private DataServiceImpl dataService;
 
 
 
@@ -39,6 +43,11 @@ CompanyController {
     @GetMapping("/companies/{id}")
     Company getCompany(@PathVariable int id) {
         return companyservice.getCompanyById(id);
+
+    }
+    @GetMapping("/sectors")
+    List<Sector> getSectors() {
+        return companyservice.getSectors();
 
     }
 
@@ -57,7 +66,7 @@ CompanyController {
 
     @PostMapping("/companies/{symbol}")
     Company addCompany(@PathVariable String  symbol) throws IOException {
-         Company c= DataServiceImpl.getCompanyData( symbol);
+         Company c= dataService.getCompanyData( symbol);
          DataServiceImpl.getHistoricalData(symbol);
         return companyservice.addCompany(c); //adauga in vbaza
     }

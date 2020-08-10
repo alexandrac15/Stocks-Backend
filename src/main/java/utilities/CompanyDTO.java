@@ -1,50 +1,37 @@
-package com.example.stocks.domain;
+package utilities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
+import com.example.stocks.domain.Sector;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "company")
-public class Company {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class CompanyDTO {
+
     private int id;
-    @Column(name = "companyName")
+
     private String companyName;
-    @Column(name = "symbol")
+
     private String symbol;
 
-    @Column(name = "employees")
+
     private int employees;
-    @Column(name = "industry")
+
     private String  industry;
-    @Column(name = "website")
+
     private String  website;
-    @Column(name = "description")
+
     private String description;
-    @Column(name = "CEO")
+
     private String CEO;
-    @JsonBackReference
-    @ManyToOne(targetEntity=Sector.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="sector")//Optional
-    private Sector  sector;
-    @Column(name = "country")
+
+
+    private String  sector;
+
     private String  country;
 
-    public Company() {
-    }
-
-    public Company(String companyName, String symbol, int employees, String industry, String website, String description, String CEO, Sector sector, String country) {
-        this.companyName = companyName;
-        this.symbol = symbol;
-        this.employees = employees;
-        this.industry = industry;
-        this.website = website;
-        this.description = description;
-        this.CEO = CEO;
-        this.sector = sector;
-        this.country = country;
+    public CompanyDTO() {
     }
 
     public String getSymbol() {
@@ -111,11 +98,11 @@ public class Company {
         this.CEO = CEO;
     }
 
-    public Sector getSector() {
+    public String getSector() {
         return sector;
     }
 
-    public void setSector(Sector sector) {
+    public void setSector(String sector) {
         this.sector = sector;
     }
 
@@ -138,7 +125,7 @@ public class Company {
                 ", website='" + website + '\'' +
                 ", description='" + description + '\'' +
                 ", CEO='" + CEO + '\'' +
-                ", sector=" + sector +'\''+
+                ", sector=" + sector +
                 ", country='" + country + '\'' +
                 '}';
     }

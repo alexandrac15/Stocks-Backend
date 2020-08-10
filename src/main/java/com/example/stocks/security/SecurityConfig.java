@@ -12,7 +12,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableWebSecurity(debug = true) // < poti scoate debug ul, e folositor cateodata dar daca vrei sa dai deploy la app trebuie sa il scoti
+//@EnableWebSecurity(debug = true) // < poti scoate debug ul, e folositor cateodata dar daca vrei sa dai deploy la app trebuie sa il scoti
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Configurarile de spring security, nimic interesant
