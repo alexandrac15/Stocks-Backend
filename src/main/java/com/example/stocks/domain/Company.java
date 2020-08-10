@@ -1,11 +1,14 @@
 package com.example.stocks.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "company")
+
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,8 @@ public class Company {
     private String description;
     @Column(name = "CEO")
     private String CEO;
-    @JsonBackReference
+
+
     @ManyToOne(targetEntity=Sector.class, fetch = FetchType.LAZY)
     @JoinColumn(name="sector")//Optional
     private Sector  sector;
@@ -110,7 +114,7 @@ public class Company {
     public void setCEO(String CEO) {
         this.CEO = CEO;
     }
-
+    @JsonBackReference
     public Sector getSector() {
         return sector;
     }

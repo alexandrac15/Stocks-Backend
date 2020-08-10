@@ -1,6 +1,9 @@
 package com.example.stocks.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "sector")
+
 public class Sector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +22,9 @@ public class Sector {
 //    @OneToMany( mappedBy = "sector",fetch = FetchType.LAZY,
 //            cascade = CascadeType.ALL)
 //    @JoinColumn(name="sector")
-    @JsonManagedReference
+
     @OneToMany(targetEntity=Company.class , fetch = FetchType.LAZY, mappedBy = "sector")
+
     private List<Company> companies=new ArrayList<>();
     //private List<Company> companies = new ArrayList<>();
 
@@ -42,6 +47,14 @@ public class Sector {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+     @JsonManagedReference
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
     }
 
     @Override
