@@ -12,8 +12,7 @@ import java.util.Collections;
 
 @Configuration
 
-// Clasa de configurare, se foloseste pentru a-i spune spring security ul sa adauge cele 2 filtre GoogleLoginFilter si ApiCallFilter
-// pentru endpointurile de /login si respectiv /controller/*
+
 public class Filters {
 
     private final GoogleLoginFilter loginFilter;
@@ -26,7 +25,7 @@ public class Filters {
     }
 
     @Bean
-    // inregistram filtrul de GoogleLoginFilter pentru /login
+
     public FilterRegistrationBean loginRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(loginFilter);
@@ -35,7 +34,7 @@ public class Filters {
     }
 
     @Bean
-    // inregistram filtrul de ApiCallFilter pentru /controller/*
+
     public FilterRegistrationBean restRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(restFilter);

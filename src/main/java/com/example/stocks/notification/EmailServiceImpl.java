@@ -61,7 +61,7 @@ public class EmailServiceImpl  {
         Session session = Session.getInstance(props, auth);
 
         EmailServiceImpl.sendEmail(session, toEmail,"Know Your Stocks "+"ERROR", message);
-        System.out.println("SEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEnT");
+        System.out.println("SEEEEEEEEEEEEEEEEEEEEEEEEEEEEEENT");
 
     }
 

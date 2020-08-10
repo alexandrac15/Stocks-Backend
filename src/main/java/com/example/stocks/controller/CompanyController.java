@@ -6,6 +6,7 @@ import com.example.stocks.domain.Graph;
 
 import com.example.stocks.domain.Sector;
 import com.example.stocks.repositories.CompanyRepository;
+import com.example.stocks.repositories.SectorRepository;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
@@ -19,69 +20,44 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class
-
-
-
-
-CompanyController {
-
+public class CompanyController {
 
     @Autowired
     private CompanyService companyservice;
-    private Reader ds=new ReaderImpl();
-//    @PostMapping("/companies")
-//    Company addCompany(@RequestBody Company company) throws IOException {
-//        return companyservice.addCompany(company);
-//    }
     @Autowired
     private DataServiceImpl dataService;
-      @Autowired
-      private CompanyRepository  cr;
 
 
-    // Single item
 
     @GetMapping("/companies/{id}")
-    Company getCompany(@PathVariable int id) {
-       // return companyservice.getCompanyById(id);
-        Company c=cr.findById(id).get();
-        return c;
+    Company getCompany(@PathVariable int id){
 
-
-    }
-    @GetMapping("/sectors")
-    List<Sector> getSectors() {
-        return companyservice.getSectors();
-
+        return companyservice.getCompanyById(id);
     }
 
-    @GetMapping("/home")
-    Graph getCompany() throws IOException, ParseException {
-        //asta va fi cu permisiion
-        ExecutorImpl e = new ExecutorImpl();
+    @GetMapping("/companies")
+    List<Company> getCompanies() {
 
-        Process p = e.execute("loadData.py 5");
-        ReaderImpl r = new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
-        Graph g = r.readHistoricData(p);
-        String s = g.toString();
-        return g;
+        return companyservice.getCompanies();
 
+    }
+
+    @GetMapping("/companies/home")
+    String home(){
+
+        return "Welcome!";
     }
 
     @PostMapping("/companies/{symbol}")
-    Company addCompany(@PathVariable String  symbol) throws IOException {
-         Company c= dataService.getCompanyData( symbol);
-        // DataServiceImpl.getHistoricalData(symbol);
-        return companyservice.addCompany(c); //adauga in vbaza
+    Company addCompany(@PathVariable String symbol) throws IOException {
+        Company company = dataService.getCompanyData(symbol);
+        DataServiceImpl.getHistoricalData(symbol);
+        return companyservice.addCompany(company); //adauga in baza
     }
-
-    @PostMapping("/err")
-    void fun() throws IOException, InterruptedException {
-
-        DataServiceImpl.appendLastTradingDay("ceva");
+    @GetMapping("/sectors")
+    List<Sector> getSectors(){
+        return companyservice.getSectors();
     }
-
 
 
 

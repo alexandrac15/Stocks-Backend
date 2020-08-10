@@ -31,9 +31,8 @@ public class Company {
     private String CEO;
 
 
-    @ManyToOne( fetch = FetchType.LAZY)
-
-   @JsonBackReference
+    @ManyToOne( fetch = FetchType.EAGER)
+   // @JsonBackReference
     private Sector  sector;
     @Column(name = "country")
     private String  country;

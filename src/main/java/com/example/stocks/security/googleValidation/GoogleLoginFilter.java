@@ -30,40 +30,39 @@ public class GoogleLoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        // Incercam sa extragem din headerele trimise de frontend tokenul de Google
+
         String idToken = ((HttpServletRequest) servletRequest).getHeader("X-ID-TOKEN");
 
-        // Raspunsul pe care il vom intoarce spre frontend
+
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // Daca am reusit sa gasim tokenul de google, vrem sa il validam
+
         if (idToken != null) {
             final GoogleIdToken.Payload payload;
             try {
-                // Vedem daca tokenul trimis de catre frontend in header este recunoscut de Google ca fiind bun
+
                 Optional<User> optionalReturnedUser = googleTokenVerifier.validateToken(idToken);
 
-                // Daca Google ul a recunoscut tokenul, atunci salvam userul si generam un token de-al nostru pentru a fi folosit
-                // la apelul de endpointuri din backend
+
                 if (optionalReturnedUser.isPresent()) {
 
-                    // Luam datele userului si le salvam in DB daca nu exista deja.
+
                     User returnedUser = optionalReturnedUser.get();
                     repo.save(returnedUser);
 
-                    // Generam un token de backend, care va fi folosit pentru a apela toate API urile pe care le expunem in controller
+
                     ApplicationTokenProvider.addAuthentication(response, returnedUser.getGoogleUserId());
 
 
-                    // Aici vom intoarce catre frontend noul token pe care l-am generat si vrem sa fie folosit.
+
                     return;
                 }
             } catch (Exception e) {
-                // Eroare, nu facem nimic, lasam eroarea sa treaca mai departe si sa intoarca 401 cartre frontend
+
             }
         }
 
-        // Intoarcem 401 catre frontend
+
         ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }

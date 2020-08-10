@@ -22,17 +22,15 @@ public class GoogleTokenVerifier {
     private static final HttpTransport transport = new NetHttpTransport();
     private static final JsonFactory jsonFactory = new JacksonFactory();
 
-    // CLIENT_ID este ID ul aplicatiei tale din consola de https://console.developers.google.com/
-    // La Credentials > OAuth 2.0 Client IDs
+
     private static final String CLIENT_ID = "" ;
 
-    // Serviciul dat de Google pentru validarea tokenurilor lor
+
     GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
             .setAudience(Collections.singletonList(CLIENT_ID))
             .build();
 
-    // validateToken are ca scop sa valideze un token de Google si sa extraga datele userului pe care mai apoi le intoarce.
-    // Intoarce Optional.empty(); daca tokenul nu a fost validat de catre Google.
+
     public Optional<User> validateToken(String token){
 
 
@@ -67,7 +65,7 @@ public class GoogleTokenVerifier {
             return Optional.of(returnedUser);
 
         }
-        // In cazul in care nu s-a validat tokenul, intoarcem Optional.empty();
+
         else {
             System.out.println("Invalid ID token.");
             return Optional.empty();

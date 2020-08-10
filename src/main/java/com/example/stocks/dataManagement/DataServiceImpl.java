@@ -5,6 +5,7 @@ import com.example.stocks.domain.Sector;
 import com.example.stocks.notification.EmailServiceImpl;
 import com.example.stocks.repositories.CompanyRepository;
 import com.example.stocks.repositories.SectorRepository;
+import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import com.google.gson.Gson;
@@ -22,27 +23,22 @@ import java.util.List;
 public class DataServiceImpl {
 
     @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private SectorRepository sectorRepository;
-
-
+    private CompanyService companyService;
 
 
     public DataServiceImpl() {
 
-
     }
     @Scheduled(cron = "10 22 18 * * 1-7")
-    public void scheduledexec() throws IOException {
-        System.out.println("S-A EXECUTAT ");
-        List<Company> symbols=companyRepository.findAll();
+    public void updateHistoricalData() throws IOException {
+        System.out.println("S-A EXECUTAT 1 ");
+        List<Company> symbols=companyService.getCompanies();
         //ia din baza de date toate companiile, ca sq stie ce fisiere trebuie sa updateze. ficare companie din db
         // are un fisier in folderul historical_data
         for (Company company: symbols){
             ExecutorImpl.execute("FileUpdate.py "+company.getSymbol());
         }
-        System.out.println("S-A EXECUTAT ");
+        System.out.println("S-A EXECUTAT 2 ");
 
     }
     public static int getHistoricalData(String symbol) throws IOException {
@@ -57,10 +53,10 @@ public class DataServiceImpl {
         ReaderImpl r = new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
         String  str = r.readConsoleOutput(p);
         CompanyDTO c1 = g.fromJson(str, CompanyDTO.class); //formeaza obiectul din outputul procesului
-        String strs = c1.getSector();
-        Sector s= sectorRepository.findBySector(strs).get(0);
-        Company cy=new Company(c1.getCompanyName(),c1.getSymbol(),c1.getEmployees(),c1.getIndustry(),c1.getWebsite(),c1.getDescription(),c1.getCEO(),s,c1.getCountry());
-        return cy;
+        String sectorName = c1.getSector();
+        Sector s= companyService.getSectorByName(sectorName); //pentru legatura cu tabelul sector
+        Company company=new Company(c1.getCompanyName(),c1.getSymbol(),c1.getEmployees(),c1.getIndustry(),c1.getWebsite(),c1.getDescription(),c1.getCEO(),s,c1.getCountry());
+        return company;
     }
 
     public static  int appendLastTradingDay(String symbol) throws IOException {
@@ -71,7 +67,8 @@ public class DataServiceImpl {
         }
 
         catch(Exception e){
-            EmailServiceImpl.sendEmailToAdmin(e.getMessage());
+            //a mail is sent to the admin in case smth goes wrong
+            EmailServiceImpl.sendEmailToAdmin(e.getMessage()+ "for symbol "+ symbol);
         }
         return 0;
     }
@@ -81,7 +78,5 @@ public class DataServiceImpl {
         return 0;
     }
 
-    public int getHistoricalDataForFiles() {
-        return 0;
-    }
+
 }

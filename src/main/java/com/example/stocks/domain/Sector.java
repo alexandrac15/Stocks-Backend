@@ -19,11 +19,11 @@ public class Sector {
     @Column(name="sector")
     private String sector;
 
-    @OneToMany( mappedBy = "sector",fetch = FetchType.LAZY,
+    @OneToMany( fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
 
     //@OneToMany(targetEntity=Company.class , fetch = FetchType.LAZY, mappedBy = "sector")
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Company> companies=new ArrayList<>();
     //private List<Company> companies = new ArrayList<>();
 

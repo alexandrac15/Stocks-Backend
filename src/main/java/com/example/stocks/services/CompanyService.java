@@ -16,21 +16,35 @@ public class CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
     private SectorRepository sectorRepository;
 
 
 
     public Company addCompany( Company company) throws IOException {
-        System.out.println("hey" +company);
-
          return companyRepository.save(company);
     }
     public Company getCompanyById(int id){
         return companyRepository.findById(id).get();
     }
 
-     public List<Sector> getSectors(){
+    public Company getCompanyBySymbol(String symbol){
+         return companyRepository.findCompanyBySymbol(symbol);
+    }
 
+    public List<Company> getCompaniesBySector(int idSector){
+        //return sectorRepository.findAllBySector(idSector);
+        return companyRepository.findCompaniesBySectorId(idSector);
+    }
+    public List<Company> getCompanies(){
+        return companyRepository.findAll();
+    }
+
+    public List<Sector> getSectors(){
         return sectorRepository.findAll();
-     }
+    }
+
+    public Sector getSectorByName(String sector){
+        return sectorRepository.findBySector(sector);
+    }
 }
