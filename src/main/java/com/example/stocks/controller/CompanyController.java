@@ -51,7 +51,8 @@ public class CompanyController {
     @PostMapping("/companies/{symbol}")
     Company addCompany(@PathVariable String symbol) throws IOException {
         Company company = dataService.getCompanyData(symbol);
-        DataServiceImpl.getHistoricalData(symbol);
+       String path= DataServiceImpl.getHistoricalData(symbol);
+       company.setHistoricDataPath(path);
         return companyservice.addCompany(company); //adauga in baza
     }
     @GetMapping("/sectors")

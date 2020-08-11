@@ -29,6 +29,8 @@ public class Company {
     private String description;
     @Column(name = "CEO")
     private String CEO;
+    @Column(name ="historicDataPath")
+    private String historicDataPath;
 
 
     @ManyToOne( fetch = FetchType.EAGER)
@@ -48,6 +50,19 @@ public class Company {
         this.website = website;
         this.description = description;
         this.CEO = CEO;
+        this.sector = sector;
+        this.country = country;
+    }
+
+    public Company(String companyName, String symbol, int employees, String industry, String website, String description, String CEO, String historicDataPath, Sector sector, String country) {
+        this.companyName = companyName;
+        this.symbol = symbol;
+        this.employees = employees;
+        this.industry = industry;
+        this.website = website;
+        this.description = description;
+        this.CEO = CEO;
+        this.historicDataPath = historicDataPath;
         this.sector = sector;
         this.country = country;
     }
@@ -132,6 +147,14 @@ public class Company {
         this.country = country;
     }
 
+    public String getHistoricDataPath() {
+        return historicDataPath;
+    }
+
+    public void setHistoricDataPath(String historicDataPath) {
+        this.historicDataPath = historicDataPath;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -143,7 +166,8 @@ public class Company {
                 ", website='" + website + '\'' +
                 ", description='" + description + '\'' +
                 ", CEO='" + CEO + '\'' +
-                ", sector=" + sector +'\''+
+                ", historicDataPath='" + historicDataPath + '\'' +
+                ", sector=" + sector +
                 ", country='" + country + '\'' +
                 '}';
     }

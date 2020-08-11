@@ -41,10 +41,12 @@ public class DataServiceImpl {
         System.out.println("S-A EXECUTAT 2 ");
 
     }
-    public static int getHistoricalData(String symbol) throws IOException {
+    public static String getHistoricalData(String symbol) throws IOException {
         //when a new company is added to the db this is called
         Process p = ExecutorImpl.execute("aquisition.py " + symbol);
-        return 0;
+        ReaderImpl r = new ReaderImpl();
+        String  str = r.readConsoleOutput(p);
+        return str ;
     }
     public  Company getCompanyData(String symbol) throws IOException {
 
