@@ -58,6 +58,7 @@ public class CompanyController {
     @GetMapping("/sectors")
     List<Sector> getSectors(){
         return companyservice.getSectors();
+
     }
 
 
