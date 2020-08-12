@@ -1,16 +1,19 @@
 package com.example.stocks.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import utilities.DateFormatter;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Pair {
 //    @JsonSerialize(as = Date.class)
 ////    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
    // @DateTimeFormat(pattern="dd/MM/yyyy")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="EEST", locale="pt-BR")
     private Date name;
     private Float value;
 
@@ -21,8 +24,9 @@ public class Pair {
         this.value = value;
     }
     public Pair(String name, String value) throws ParseException {
-        Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(name);
-        this.name =date1 ;
+
+        this.name = DateFormatter.convertToDate(name);
+
         this.value = Float.parseFloat(value);
     }
   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

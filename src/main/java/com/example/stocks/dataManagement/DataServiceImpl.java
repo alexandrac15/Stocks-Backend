@@ -29,7 +29,7 @@ public class DataServiceImpl {
     public DataServiceImpl() {
 
     }
-    @Scheduled(cron = "10 22 18 * * 1-7")
+    @Scheduled(cron = "10 56 17 * * 1-7")
     public void updateHistoricalData() throws IOException {
         System.out.println("S-A EXECUTAT 1 ");
         List<Company> symbols=companyService.getCompanies();

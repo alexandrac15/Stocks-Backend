@@ -27,6 +27,7 @@ public class ReaderImpl implements Reader {
         String s;
         String s1;
         String[] arr;
+        //String d=stdInput.readLine();
         while ((s = stdInput.readLine()) != null) {
             s1=s.substring(1);
               arr=s1.split("  ");

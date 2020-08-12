@@ -28,39 +28,48 @@ public class CompanyController {
     private DataServiceImpl dataService;
 
 
-
     @GetMapping("/companies/{id}")
-    Company getCompany(@PathVariable int id){
-
+    Company getCompany(@PathVariable int id) {
         return companyservice.getCompanyById(id);
     }
 
     @GetMapping("/companies")
     List<Company> getCompanies() {
-
         return companyservice.getCompanies();
-
     }
 
     @GetMapping("/companies/home")
-    String home(){
-
+    String home() {
         return "Welcome!";
     }
 
     @PostMapping("/companies/{symbol}")
     Company addCompany(@PathVariable String symbol) throws IOException {
         Company company = dataService.getCompanyData(symbol);
-       String path= DataServiceImpl.getHistoricalData(symbol);
-       company.setHistoricDataPath(path);
+        String path = DataServiceImpl.getHistoricalData(symbol);
+        company.setHistoricDataPath(path);
         return companyservice.addCompany(company); //adauga in baza
     }
+
     @GetMapping("/sectors")
-    List<Sector> getSectors(){
+    List<Sector> getSectors() {
         return companyservice.getSectors();
 
     }
 
+    @GetMapping("/graph/{idCompany}/{days}")
+    Graph getHistoricChart(@PathVariable int idCompany, @PathVariable int days) throws IOException, ParseException {
+            Company c= companyservice.getCompanyById(idCompany);
+            Process p= ExecutorImpl.execute("loadData.py \""+c.getHistoricDataPath()+"\" "+days);
+        System.out.println("a"+c.getHistoricDataPath());
+            Reader r=new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
+            Graph g= r.readHistoricData(p);
+            System.out.println(g);
+            return g;
+
+
+
+    }
 
 
 }
