@@ -2,8 +2,10 @@ package com.example.stocks.controller;
 
 import com.example.stocks.domain.Company;
 import com.example.stocks.domain.json_config_classes.JsonConfig;
+import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import utilities.Reader;
 
@@ -35,4 +37,25 @@ public class ModelController {
         return s;
     }
 
+    @Autowired
+    CompanyService companyService;
+
+    @GetMapping("/getPrediction/{CompanyId}")
+    @CrossOrigin(origins = "*")
+    String getModelPrediction(@PathVariable int CompanyId) throws IOException {
+
+        //companyService.getCompanyById(CompanyId);
+
+        System.out.println(
+                "Start predicting"
+        );
+
+        Process p=ExecutorImpl.execute("model_predict.py "+"D:\\EXPERIMENTS\\TEST_ENDPOINT\\model_NFLX-close-10_3_volume_1\\");
+        Reader r=new ReaderImpl();
+        String s=r.readConsoleOutput(p);
+        System.out.println(s);
+
+        return s;
+
+    }
 }
