@@ -1,10 +1,5 @@
 package com.example.stocks.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 
 @Entity
@@ -31,6 +26,8 @@ public class Company {
     private String CEO;
     @Column(name ="historicDataPath")
     private String historicDataPath;
+    @Column(name ="url")
+    private String url;
 
 
     @ManyToOne( fetch = FetchType.EAGER)
@@ -42,7 +39,7 @@ public class Company {
     public Company() {
     }
 
-    public Company(String companyName, String symbol, int employees, String industry, String website, String description, String CEO, Sector sector, String country) {
+    public Company(String companyName, String symbol, int employees, String industry, String website, String description, String CEO, Sector sector, String country,String url) {
         this.companyName = companyName;
         this.symbol = symbol;
         this.employees = employees;
@@ -52,9 +49,10 @@ public class Company {
         this.CEO = CEO;
         this.sector = sector;
         this.country = country;
+        this.url = url;
     }
 
-    public Company(String companyName, String symbol, int employees, String industry, String website, String description, String CEO, String historicDataPath, Sector sector, String country) {
+    public Company(String companyName, String symbol, int employees, String industry, String website, String description, String CEO, String historicDataPath, Sector sector, String country,String url) {
         this.companyName = companyName;
         this.symbol = symbol;
         this.employees = employees;
@@ -65,6 +63,7 @@ public class Company {
         this.historicDataPath = historicDataPath;
         this.sector = sector;
         this.country = country;
+        this.url = url;
     }
 
     public String getSymbol() {
@@ -155,6 +154,14 @@ public class Company {
         this.historicDataPath = historicDataPath;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -167,6 +174,7 @@ public class Company {
                 ", description='" + description + '\'' +
                 ", CEO='" + CEO + '\'' +
                 ", historicDataPath='" + historicDataPath + '\'' +
+                ", logoPath='" + url + '\'' +
                 ", sector=" + sector +
                 ", country='" + country + '\'' +
                 '}';

@@ -1,12 +1,6 @@
 package utilities;
 
 
-
-import com.example.stocks.domain.Sector;
-
-import javax.persistence.*;
-
-
 public class CompanyDTO {
 
     private int id;
@@ -30,6 +24,7 @@ public class CompanyDTO {
     private String  sector;
 
     private String  country;
+    private String url;
 
     public CompanyDTO() {
     }
@@ -114,9 +109,17 @@ public class CompanyDTO {
         this.country = country;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
-        return "Company{" +
+        return "CompanyDTO{" +
                 "id=" + id +
                 ", companyName='" + companyName + '\'' +
                 ", symbol='" + symbol + '\'' +
@@ -125,8 +128,9 @@ public class CompanyDTO {
                 ", website='" + website + '\'' +
                 ", description='" + description + '\'' +
                 ", CEO='" + CEO + '\'' +
-                ", sector=" + sector +
+                ", sector='" + sector + '\'' +
                 ", country='" + country + '\'' +
+                ", logoPath='" + url + '\'' +
                 '}';
     }
 }

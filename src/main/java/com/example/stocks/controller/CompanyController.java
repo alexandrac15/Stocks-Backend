@@ -48,6 +48,9 @@ public class CompanyController {
         Company company = dataService.getCompanyData(symbol);
         String path = DataServiceImpl.getHistoricalData(symbol);
         company.setHistoricDataPath(path);
+        System.out.println("INAINTE DE DB");
+        System.out.println(company);
+
         return companyservice.addCompany(company); //adauga in baza
     }
 
