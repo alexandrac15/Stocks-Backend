@@ -11,4 +11,5 @@ public interface SectorRepository extends JpaRepository<Sector,Integer> {
      List<Company> findAllBySector(int idSector);
      Sector findBySector(String sector);
 
+
 }

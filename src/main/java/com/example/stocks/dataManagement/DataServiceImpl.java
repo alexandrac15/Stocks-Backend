@@ -4,6 +4,7 @@ import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Sector;
 import com.example.stocks.notification.EmailServiceImpl;
 import com.example.stocks.services.CompanyService;
+import com.example.stocks.services.SectorService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import com.google.gson.Gson;
@@ -22,6 +23,8 @@ public class DataServiceImpl {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private SectorService sectorService;
 
 
     public DataServiceImpl() {
@@ -55,7 +58,7 @@ public class DataServiceImpl {
         System.out.println(str);
         CompanyDTO c1 = g.fromJson(str, CompanyDTO.class); //formeaza obiectul din outputul procesului
         String sectorName = c1.getSector();
-        Sector s= companyService.getSectorByName(sectorName); //pentru legatura cu tabelul sector
+        Sector s= sectorService.getSectorByName(sectorName); //pentru legatura cu tabelul sector
         Company company=new Company(c1.getCompanyName(),c1.getSymbol(),c1.getEmployees(),c1.getIndustry(),c1.getWebsite(),c1.getDescription(),c1.getCEO(),s,c1.getCountry(),c1.getUrl());
         return company;
     }

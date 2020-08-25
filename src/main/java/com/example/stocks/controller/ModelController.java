@@ -1,7 +1,9 @@
 package com.example.stocks.controller;
 
 import com.example.stocks.domain.Company;
+import com.example.stocks.domain.MLModel;
 import com.example.stocks.domain.json_config_classes.JsonConfig;
+import com.example.stocks.repositories.MLModelRepository;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
@@ -12,33 +14,67 @@ import utilities.Reader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
 
 public class ModelController {
+    @Autowired
+    CompanyService companyService;
+    @Autowired
+    MLModelRepository mlModelRepository;
+    String extractFeatureFromJson(String Json, String Feature){
+        String aux = Json;
+        aux = aux.split(Feature)[1];
+        aux = aux.split(",")[0];
+        return aux.split("\"")[2];
+    }
+
+    String replacePath(String Json, String Feature, ArrayList<String> Replacements){
+
+        String finalJson = "";
+
+        String[] features = Json.split(Feature);
+
+        finalJson += features[0];
+        for(int featureIndex = 1; featureIndex < features.length - 1; featureIndex++)
+        {
+            finalJson += Feature;
+            String feature = features[featureIndex];
+            feature.split("");
+
+
+
+            finalJson += Replacements.get(featureIndex);
+
+        }
+        return "ok";
+    }
 
     @PostMapping("/create")
     @CrossOrigin(origins = "*")
-    String createMlModel(@RequestBody String MlConfigJson) throws IOException, InterruptedException {
+    String createMlModel(@RequestBody String MlConfigJson/*, int cmpid*/) throws IOException, InterruptedException {
+
+        int company_id = 1;
+
         System.out.println(
                 MlConfigJson
         );
-        Process p=ExecutorImpl.execute("model_creation.py \""+MlConfigJson+"\"");
-        InputStream err = p.getErrorStream();
-        InputStreamReader isr = new InputStreamReader(err);
 
-        Reader r=new ReaderImpl();
-        String s=r.readConsoleOutput(p);
+        String path = extractFeatureFromJson(MlConfigJson, "MODEL_SAVED_PATH");
+        Company company = companyService.getCompanyById(company_id);
 
-        System  .out.println(s);
-        System.out.print(isr.read());
-        return s;
+        MLModel mlModel = new MLModel(path, false, company);
+        mlModelRepository.save(mlModel);
+
+
+        Process p = ExecutorImpl.execute("model_creation.py \""+MlConfigJson+"\"");
+
+
+        return "ok";
     }
-
-    @Autowired
-    CompanyService companyService;
 
     @GetMapping("/getPrediction/{CompanyId}")
     @CrossOrigin(origins = "*")

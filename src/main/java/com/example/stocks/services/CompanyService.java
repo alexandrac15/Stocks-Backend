@@ -40,11 +40,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public List<Sector> getSectors(){
-        return sectorRepository.findAll();
-    }
 
-    public Sector getSectorByName(String sector){
-        return sectorRepository.findBySector(sector);
-    }
+
+
 }

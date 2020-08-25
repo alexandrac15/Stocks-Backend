@@ -1,6 +1,7 @@
 package com.example.stocks.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "company")
@@ -28,7 +29,9 @@ public class Company {
     private String historicDataPath;
     @Column(name ="url")
     private String url;
-
+    @OneToMany( fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<MLModel> models;
 
     @ManyToOne( fetch = FetchType.EAGER)
    // @JsonBackReference
@@ -160,6 +163,14 @@ public class Company {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public List<MLModel> getModels() {
+        return models;
+    }
+
+    public void setModels(List<MLModel> models) {
+        this.models = models;
     }
 
     @Override

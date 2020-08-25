@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import utilities.Reader;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -54,11 +55,7 @@ public class CompanyController {
         return companyservice.addCompany(company); //adauga in baza
     }
 
-    @GetMapping("/sectors")
-    List<Sector> getSectors() {
-        return companyservice.getSectors();
 
-    }
 
     @GetMapping("/graph/{idCompany}/{days}")
     Graph getHistoricChart(@PathVariable int idCompany, @PathVariable int days) throws IOException, ParseException {
@@ -73,6 +70,13 @@ public class CompanyController {
 
 
     }
+
+
+    @GetMapping("/sector/companies/{idSector}")
+    List<Company> getCompaniesBysector(@PathVariable int idSector){
+        return companyservice.getCompaniesBySector(idSector);
+    }
+
 
 
 }
