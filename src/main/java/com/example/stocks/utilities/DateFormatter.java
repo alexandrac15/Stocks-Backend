@@ -1,4 +1,4 @@
-package utilities;
+package com.example.stocks.utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

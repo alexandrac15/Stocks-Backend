@@ -4,6 +4,7 @@ import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Sector;
 import com.example.stocks.notification.EmailServiceImpl;
 import com.example.stocks.services.CompanyService;
+import com.example.stocks.services.PredictionService;
 import com.example.stocks.services.SectorService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
@@ -12,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import utilities.CompanyDTO;
+import com.example.stocks.utilities.CompanyDTO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -25,19 +27,22 @@ public class DataServiceImpl {
     private CompanyService companyService;
     @Autowired
     private SectorService sectorService;
+    @Autowired
+    private PredictionService predictionService;
 
 
     public DataServiceImpl() {
 
     }
-    @Scheduled(cron = "0 38 11 * * 1-7")
+    @Scheduled(cron = "0 00 11 * * 1-7")
     public void updateHistoricalData() throws IOException {
         System.out.println("S-A EXECUTAT 1 ");
         List<Company> symbols=companyService.getCompanies();
         //ia din baza de date toate companiile, ca sq stie ce fisiere trebuie sa updateze. ficare companie din db
         // are un fisier in folderul historical_data
+        ArrayList<Thread> threads;
         for (Company company: symbols){
-            ExecutorImpl.execute("FileUpdate.py "+company.getSymbol());
+            new Thread(new DataUpdateService(company.getSymbol(),predictionService)).start();
         }
         System.out.println("S-A EXECUTAT 2 ");
 

@@ -1,4 +1,4 @@
-package utilities;
+package com.example.stocks.utilities;
 
 import com.example.stocks.domain.Graph;
 

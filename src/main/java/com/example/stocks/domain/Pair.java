@@ -1,13 +1,11 @@
 package com.example.stocks.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import utilities.DateFormatter;
+import com.example.stocks.utilities.DateFormatter;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class Pair {
 //    @JsonSerialize(as = Date.class)

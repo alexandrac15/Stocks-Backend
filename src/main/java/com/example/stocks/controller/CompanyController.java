@@ -4,17 +4,13 @@ import com.example.stocks.dataManagement.DataServiceImpl;
 import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Graph;
 
-import com.example.stocks.domain.Sector;
-import com.example.stocks.repositories.CompanyRepository;
-import com.example.stocks.repositories.SectorRepository;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import utilities.Reader;
+import com.example.stocks.utilities.Reader;
 
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;

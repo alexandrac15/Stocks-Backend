@@ -2,7 +2,7 @@ package com.example.stocks.vechi.service;
 
 import com.example.stocks.domain.Graph;
 import com.example.stocks.domain.Pair;
-import utilities.Reader;
+import com.example.stocks.utilities.Reader;
 
 import java.io.*;
 import java.text.ParseException;

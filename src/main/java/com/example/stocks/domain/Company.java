@@ -29,8 +29,9 @@ public class Company {
     private String historicDataPath;
     @Column(name ="url")
     private String url;
+
     @OneToMany( fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            mappedBy = "parentCompany")
     private List<MLModel> models;
 
     @ManyToOne( fetch = FetchType.EAGER)
@@ -68,7 +69,20 @@ public class Company {
         this.country = country;
         this.url = url;
     }
-
+    public Company(int id, String companyName, String symbol, int employees, String industry, String website, String description, String CEO, String historicDataPath, Sector sector, String country, List<MLModel> models) {
+        this.id = id;
+        this.companyName = companyName;
+        this.symbol = symbol;
+        this.employees = employees;
+        this.industry = industry;
+        this.website = website;
+        this.description = description;
+        this.CEO = CEO;
+        this.historicDataPath = historicDataPath;
+        this.sector = sector;
+        this.country = country;
+        this.models = models;
+    }
     public String getSymbol() {
         return symbol;
     }

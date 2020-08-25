@@ -1,5 +1,7 @@
 package com.example.stocks.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,9 +16,19 @@ public class MLModel {
     private Boolean isDefault;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_company_id")
     private Company parentCompany;
 
+    public MLModel(){}
+
     public MLModel(String modelPath, Boolean isDefault, Company parentCompany) {
+        this.modelPath = modelPath;
+        this.isDefault = isDefault;
+        this.parentCompany = parentCompany;
+    }
+
+    public MLModel(int id, String modelPath, Boolean isDefault, Company parentCompany) {
+        this.id = id;
         this.modelPath = modelPath;
         this.isDefault = isDefault;
         this.parentCompany = parentCompany;
