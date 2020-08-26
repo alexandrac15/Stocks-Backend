@@ -75,7 +75,8 @@ public class CompanyController {
 
     @PostMapping("/companies/{symbol}")
     Company addCompany(@PathVariable String symbol) throws IOException, InterruptedException {
-        Company company = dataService.getCompanyData(symbol);
+        //Company company = dataService.getCompanyData(symbol);
+        Company company = companyservice.getCompanyBySymbol(symbol);
         String path = DataServiceImpl.getHistoricalData(symbol);
         company.setHistoricDataPath(path);
         //createmodel:
@@ -88,7 +89,7 @@ public class CompanyController {
 
             if(token.equals("REPLACE"))
             {
-                replacements.add(" \\\"" + symbol + "\\\", ");
+                replacements.add("\\\"" + symbol + "\\\", ");
             }
             else {
                 replacements.add("");
@@ -97,13 +98,13 @@ public class CompanyController {
 
         jsonString = JsonManipulationUtilities.replaceFeatures(jsonString, "\"PATH", replacements);
 
-//        replacements = new ArrayList<String>();
-//        replacements.add("D:\\\\DEFAULT_SECTOR_MODELS\\\\"+company.getSector().getSector()+"\\\\"+company.getCompanyName()+"\\\\tensorboard");
-//        jsonString = JsonManipulationUtilities.replaceFeatures(jsonString, "TENSORBOARD_PATH_CONFIG", replacements);
-//
-//        replacements = new ArrayList<String>();
-//        replacements.add("D:\\\\DEFAULT_SECTOR_MODELS\\\\"+company.getSector().getSector()+"\\\\"+company.getCompanyName()+"\\\\model");
-//        jsonString = JsonManipulationUtilities.replaceFeatures(jsonString, "MODEL_SAVED_PATH", replacements);
+        replacements = new ArrayList<String>();
+        replacements.add("\\\"D:\\\\DEFAULT_SECTOR_MODELS\\\\"+company.getSector().getSector().replace(" ", "_")+"\\\\"+symbol+"\\\\tensorboard\\\"");
+        jsonString = JsonManipulationUtilities.replaceFeatures(jsonString, "TENSORBOARD_PATH_CONFIG", replacements);
+
+        replacements = new ArrayList<String>();
+        replacements.add("\\\"D:\\\\DEFAULT_SECTOR_MODELS\\\\"+company.getSector().getSector().replace(" ", "_")+"\\\\"+symbol+"\\\\model\\\"");
+        jsonString = JsonManipulationUtilities.replaceFeatures(jsonString, "MODEL_SAVED_PATH", replacements);
 
 
         Process p= mlModelService.createMlModel(jsonString,company.getId());
@@ -122,9 +123,6 @@ public class CompanyController {
             Graph g= r.readHistoricData(p);
             System.out.println(g);
             return g;
-
-
-
     }
 
 

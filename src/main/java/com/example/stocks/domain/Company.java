@@ -1,5 +1,7 @@
 package com.example.stocks.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -178,7 +180,7 @@ public class Company {
     public void setUrl(String url) {
         this.url = url;
     }
-
+    @JsonIgnore
     public List<MLModel> getModels() {
         return models;
     }

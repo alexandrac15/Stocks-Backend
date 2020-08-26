@@ -30,7 +30,7 @@ public class JsonManipulationUtilities {
             if(featureIndex - 1 < Replacements.size() && (!Replacements.get(featureIndex - 1).equals(""))) {
                 String[] tokens = feature.split(" ");
                 tokens[1] = Replacements.get(featureIndex - 1);
-                feature = String.join("", tokens);
+                feature = String.join(" ", tokens);
             }
             finalJson += feature;
         }
