@@ -1,11 +1,13 @@
 package com.example.stocks.dataManagement;
 
 import com.example.stocks.domain.Company;
+import com.example.stocks.domain.MLModel;
 import com.example.stocks.domain.Sector;
 import com.example.stocks.notification.EmailServiceImpl;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.services.PredictionService;
 import com.example.stocks.services.SectorService;
+import com.example.stocks.utilities.CompanyUtils;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import com.google.gson.Gson;
@@ -34,7 +36,7 @@ public class DataServiceImpl {
     public DataServiceImpl() {
 
     }
-    @Scheduled(cron = "0 00 11 * * 1-7")
+    @Scheduled(cron = "30 09 18 * * 1-7")
     public void updateHistoricalData() throws IOException {
         System.out.println("S-A EXECUTAT 1 ");
         List<Company> symbols=companyService.getCompanies();
@@ -42,7 +44,16 @@ public class DataServiceImpl {
         // are un fisier in folderul historical_data
         ArrayList<Thread> threads;
         for (Company company: symbols){
-            new Thread(new DataUpdateService(company.getSymbol(),predictionService)).start();
+            String modelPath = null;
+            try {
+                List<MLModel> models = company.getModels();
+                MLModel mlModel = CompanyUtils.getDefaultModel(models);
+                modelPath = (mlModel == null ? null : mlModel.getModelPath());
+
+            }catch (Exception e){
+
+            }
+            new Thread(new DataUpdateService(company.getSymbol(), modelPath, company.getId() ,predictionService)).start();
         }
         System.out.println("S-A EXECUTAT 2 ");
 

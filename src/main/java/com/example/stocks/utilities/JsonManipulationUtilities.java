@@ -1,6 +1,11 @@
 package com.example.stocks.utilities;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class JsonManipulationUtilities {
 
@@ -47,4 +52,30 @@ public class JsonManipulationUtilities {
         return extractedFeatures;
     }
 
+    public static ArrayList<Float> extractPredictionsFromPythonOutput(String Json)
+    {
+        ArrayList<Float> values = new ArrayList<>();
+
+        String aux = Json.replace("[", "").replace("]", "").replace("\n", "").trim().replaceAll(" +", " ");
+        String[] stringValues = aux.split(" ");
+
+        for(String v: stringValues)
+        {
+            values.add(Float.parseFloat(v));
+        }
+
+        return values;
+
+    }
+    public static String getJsonFromFile( String jsonPath) throws IOException {
+        String s;
+        File f=new File(jsonPath);
+        Scanner sc = new Scanner(f);
+
+        // we just need to use \\Z as delimiter
+        sc.useDelimiter("//Z");
+        s=sc.next().replaceAll("\r?\n", " ").trim();
+        return s;
+
+    }
 }

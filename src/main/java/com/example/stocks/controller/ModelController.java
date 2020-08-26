@@ -6,6 +6,7 @@ import com.example.stocks.domain.MLModel;
 import com.example.stocks.repositories.MLModelRepository;
 import com.example.stocks.services.CompanyService;
 import com.example.stocks.services.ModelJsonService;
+import com.example.stocks.utilities.CompanyUtils;
 import com.example.stocks.vechi.service.ExecutorImpl;
 import com.example.stocks.vechi.service.ReaderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +56,6 @@ public class ModelController {
         return "ok";
     }
 
-    private MLModel getDefaultModel(List<MLModel> modelList){
-        for(MLModel model : modelList)
-            if(model.getDefault())
-                return model;
-
-        return null;
-    }
 
     @GetMapping("/getPrediction/{CompanyId}")
     @CrossOrigin(origins = "*")
@@ -69,7 +63,7 @@ public class ModelController {
 
         Company company = companyService.getCompanyById(CompanyId);
         List<MLModel> list = company.getModels();
-        MLModel defaultModel = getDefaultModel(company.getModels());
+        MLModel defaultModel = CompanyUtils.getDefaultModel(company.getModels());
 
         if(defaultModel == null)
             return "Could not find default model for company " + CompanyId;

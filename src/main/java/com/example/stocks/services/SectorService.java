@@ -22,4 +22,5 @@ public class SectorService {
     public Sector getSectorByName(String sector){
         return sectorRepository.findBySector(sector);
     }
+
 }

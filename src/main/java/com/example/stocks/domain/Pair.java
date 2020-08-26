@@ -27,6 +27,13 @@ public class Pair {
 
         this.value = Float.parseFloat(value);
     }
+    public Pair(String name, Float value) throws ParseException {
+
+        this.name = DateFormatter.convertToDate(name);
+
+        this.value = value;
+    }
+
   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     public Date getName() {
         return name;

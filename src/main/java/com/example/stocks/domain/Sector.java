@@ -26,10 +26,16 @@ public class Sector {
     //@JsonManagedReference
     private List<Company> companies=new ArrayList<>();
     //private List<Company> companies = new ArrayList<>();
-
+    private String defaultModelpath;
 
 
     public Sector() {
+    }
+
+    public Sector(String sector, List<Company> companies, String defaultModelpath) {
+        this.sector = sector;
+        this.companies = companies;
+        this.defaultModelpath = defaultModelpath;
     }
 
     public int getId() {
@@ -56,12 +62,21 @@ public class Sector {
         this.companies = companies;
     }
 
+    public String getDefaultModelpath() {
+        return defaultModelpath;
+    }
+
+    public void setDefaultModelpath(String defaultModelpath) {
+        this.defaultModelpath = defaultModelpath;
+    }
+
     @Override
     public String toString() {
         return "Sector{" +
                 "id=" + id +
                 ", sector='" + sector + '\'' +
                 ", companies=" + companies +
+                ", defaultModelpath='" + defaultModelpath + '\'' +
                 '}';
     }
 }

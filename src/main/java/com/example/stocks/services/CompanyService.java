@@ -22,7 +22,7 @@ public class CompanyService {
 
 
     public Company addCompany( Company company) throws IOException {
-         return companyRepository.save(company);
+            return companyRepository.save(company);
     }
     public Company getCompanyById(int id){
         return companyRepository.findById(id).get();
