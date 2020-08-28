@@ -31,7 +31,7 @@ public class MLModelService{
         String path = extractFeatureFromJson(MlConfigJson, "MODEL_SAVED_PATH");
         Company company = companyService.getCompanyById(CompanyId);
 
-        MLModel mlModel = new MLModel(path, false, company);
+        MLModel mlModel = new MLModel(path, true, company);
         mlModelRepository.save(mlModel);
 
         String finalJson = modelJsonService.convertCompanySymbolsIntoPath(MlConfigJson);
@@ -42,6 +42,5 @@ public class MLModelService{
         Process p = ExecutorImpl.execute("model_creation.py \""+ finalJson +"\"");
 
         return p;
-
     }
 }

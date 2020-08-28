@@ -36,28 +36,67 @@ public class DataServiceImpl {
     public DataServiceImpl() {
 
     }
-    @Scheduled(cron = "30 09 18 * * 1-7")
+    @Scheduled(cron = "00 33 19 * * 1-7")
     public void updateHistoricalData() throws IOException {
-        System.out.println("S-A EXECUTAT 1 ");
-        List<Company> symbols=companyService.getCompanies();
+
         //ia din baza de date toate companiile, ca sq stie ce fisiere trebuie sa updateze. ficare companie din db
         // are un fisier in folderul historical_data
-        ArrayList<Thread> threads;
+
+        List<Company> symbols=companyService.getCompanies();
         for (Company company: symbols){
             String modelPath = null;
+
             try {
                 List<MLModel> models = company.getModels();
                 MLModel mlModel = CompanyUtils.getDefaultModel(models);
                 modelPath = (mlModel == null ? null : mlModel.getModelPath());
 
-            }catch (Exception e){
-
+                if(modelPath == null)
+                {
+                    String error = "Error: no default model available for company " + company.getSymbol();
+                    System.out.println(error);
+                    EmailServiceImpl.sendEmailToAdmin(error);
+                }
+            } catch (Exception e){
+                String error = "Error during extraction of default model for company " + company.getSymbol() + " Error: " + e.getMessage();
+                System.out.println(error);
             }
-            new Thread(new DataUpdateService(company.getSymbol(), modelPath, company.getId() ,predictionService)).start();
-        }
-        System.out.println("S-A EXECUTAT 2 ");
 
+            new Thread(new DataUpdateService(company.getSymbol(), modelPath, company.getId() ,predictionService, true)).start();
+        }
     }
+
+    public void updatePredictions() throws IOException {
+
+        //ia din baza de date toate companiile, ca sq stie ce fisiere trebuie sa updateze. ficare companie din db
+        // are un fisier in folderul historical_data
+
+        List<Company> symbols=companyService.getCompanies();
+        for (Company company: symbols){
+            String modelPath = null;
+
+            try {
+                List<MLModel> models = company.getModels();
+                MLModel mlModel = CompanyUtils.getDefaultModel(models);
+                modelPath = (mlModel == null ? null : mlModel.getModelPath());
+
+                if(modelPath == null)
+                {
+                    String error = "Error: no default model available for company " + company.getSymbol();
+                    System.out.println(error);
+                    EmailServiceImpl.sendEmailToAdmin(error);
+                    continue;
+                }
+            } catch (Exception e){
+                String error = "Error during extraction of default model for company " + company.getSymbol() + " Error: " + e.getMessage();
+                System.out.println(error);
+                continue;
+            }
+
+            new Thread(new DataUpdateService(company.getSymbol(), modelPath, company.getId() ,predictionService, false)).start();
+        }
+    }
+
     public static String getHistoricalData(String symbol) throws IOException {
         //when a new company is added to the db this is called
         Process p = ExecutorImpl.execute("aquisition.py " + symbol);

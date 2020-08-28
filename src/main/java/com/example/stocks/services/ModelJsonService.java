@@ -21,7 +21,7 @@ public class ModelJsonService {
         ArrayList<String> replacementPaths = new ArrayList<>();
 
         for(int symbolIdx = 0; symbolIdx < companySymbols.size(); symbolIdx++)
-            replacementPaths.add("\\\""+companyService.getCompanyBySymbol(companySymbols.get(symbolIdx)).getHistoricDataPath()+"\\\",");
+            replacementPaths.add("\\\""+companyService.getCompanyBySymbol(companySymbols.get(symbolIdx)).getHistoricDataPath().trim()+"\\\",");
 
         return replaceFeatures(MlConfigJson, "\"PATH", replacementPaths);
 

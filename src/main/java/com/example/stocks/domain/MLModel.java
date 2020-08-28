@@ -3,6 +3,7 @@ package com.example.stocks.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "MLModel")

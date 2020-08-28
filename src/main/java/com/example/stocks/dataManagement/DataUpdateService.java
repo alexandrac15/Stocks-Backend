@@ -20,46 +20,48 @@ import com.google.gson.Gson;
 import net.minidev.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 public class DataUpdateService implements Runnable {
+
+    private static final int STATUS_SUCCESS = 0 ;
 
     private String companySymbol;
     private String predictionModelPath;
     private Integer companyId;
+    private Boolean updateHistoricalData;
     @Autowired
     private PredictionService predictionService;
 
-    DataUpdateService(String companySymbol, String predictionModelPath, Integer companyId, PredictionService predictionService){
+    DataUpdateService(String companySymbol, String predictionModelPath, Integer companyId, PredictionService predictionService, Boolean updateHistoricalData){
         this.companySymbol = companySymbol;
         this.predictionService=predictionService;
         this.predictionModelPath = predictionModelPath;
         this.companyId = companyId;
+        this.updateHistoricalData = updateHistoricalData;
     }
     private void updateHistoricData(){
         Process p = null;
+
         try {
             p = ExecutorImpl.execute("FileUpdate.py "+ this.companySymbol);
         } catch (IOException e) {
-            System.out.print("Error encountered when updating historical data for company " + companySymbol + " \nError is " + e.getMessage());
             throw new RuntimeException("Error encountered when updating historical data for company " + companySymbol + " \nError is " + e.getMessage());
-            /// TODO: SEND MAIL
-        }
-
-        if(p == null)
-        {
-            System.out.print("Update Historic Data Process is null for some reason for company " + companySymbol);
-            /// TODO: SEND MAIL
-            throw new RuntimeException("Update Historic Data Process is null for some reason for company " + companySymbol);
         }
 
         try {
             if(!p.waitFor(5, TimeUnit.MINUTES)) {
-                System.out.print("Process time expired for company " + companySymbol);
-                throw new RuntimeException("Process time expired for company " + companySymbol);
+                p.destroy();
+                throw new RuntimeException("Process time expired for company " + companySymbol + " " + p.exitValue());
             }
         } catch (InterruptedException e) {
-            System.out.print("Process error during execution for company " + companySymbol + "error is " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Process error during execution for company " + companySymbol + "error is " + e.getMessage());
+        }
+
+        int processStatus = p.exitValue();
+        if(processStatus != STATUS_SUCCESS)
+        {
+            throw new RuntimeException("Historic Data process exited with status " + processStatus);
         }
 
        return;
@@ -75,32 +77,28 @@ public class DataUpdateService implements Runnable {
         try {
              p = ExecutorImpl.execute("model_predict.py "+ predictionModelPath);
         } catch (IOException e) {
-            System.out.print("Error encountered when predicting historical data for company " + companySymbol + " \nError is " + e.getMessage());
             throw new RuntimeException("Error encountered when predicting historical data for company " + companySymbol + " \nError is " + e.getMessage());
-        }
-
-        if(p == null)
-        {
-            System.out.print("Update Prediction Process is null for some reason for company " + companySymbol);
-            throw new RuntimeException("\"Update Prediction Process is null for some reason for company \" + companySymbol");
         }
 
         try {
             if(!p.waitFor(15, TimeUnit.MINUTES)) {
-                System.out.print("Process time expired for company " + companySymbol );
-                throw new RuntimeException("Process time expired for company " + companySymbol);
+                throw new RuntimeException("Process time expired for company " + companySymbol + ' ');
             }
         } catch (InterruptedException e) {
-            System.out.print("Process error during execution for company " + companySymbol + "error is " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Process error during execution for company " + companySymbol + "error is " + e.getMessage());
+        }
+
+        int processStatus = p.exitValue();
+        if(processStatus != STATUS_SUCCESS)
+        {
+            throw new RuntimeException("Update Prediction process exited with status " + processStatus);
         }
 
         Reader r = new ReaderImpl();
         try {
             s = r.readConsoleOutput(p);
         } catch (IOException e) {
-            System.out.print("Could not read standard output from prediction script for company " + companySymbol);
             e.printStackTrace();
             throw new RuntimeException("Could not read standard output from prediction script for company " + companySymbol);
         }
@@ -113,25 +111,32 @@ public class DataUpdateService implements Runnable {
 
         Graph g;
 
-//        try {
-//            updateHistoricData();
-//        } catch (RuntimeException e) {
-//            //// TODO SEND MAIL
-//            return;
-//        }
+        if(this.updateHistoricalData) {
+            try {
+                updateHistoricData();
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
+                EmailServiceImpl.sendEmailToAdmin(e.getMessage());
+                return;
+            }
+            System.out.print("Historical data updated for " + this.companySymbol+"\n");
+
+        }
 
         if(this.predictionModelPath != null) {
             try {
                 g = new Graph(updatePredictions());
-            } catch (RuntimeException | ParseException e) {
-                //// TODO SEND MAIL
+            } catch (Runt+imeException | ParseException e) {
+                System.out.println(e.getMessage());
+                EmailServiceImpl.sendEmailToAdmin(e.getMessage());
                 return;
             }
+            System.out.print("Predictions updated for " + this.companySymbol+"\n");
 
             predictionService.addPrediction(companyId, g);
         }
 
-        System.out.print("All ok");
+        System.out.print("All ok for company " + this.companySymbol+"\n");
         return;
     }
 }

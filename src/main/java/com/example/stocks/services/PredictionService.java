@@ -22,7 +22,7 @@ public class PredictionService {
     }
      public Graph findPredictionByCompanyID(Integer companyId){
          mutex.lock();
-         Graph returnedGraph=predictions.get(companyId);
+         Graph returnedGraph = predictions.getOrDefault(companyId, null);
          mutex.unlock();
          return returnedGraph;
 

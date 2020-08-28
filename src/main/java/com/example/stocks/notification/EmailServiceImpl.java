@@ -1,12 +1,16 @@
 package com.example.stocks.notification;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
-public class EmailServiceImpl  {
+@Component
+public class EmailServiceImpl {
 
     public static  void sendEmail(Session session, String toEmail, String subject, String body){
         try
@@ -31,7 +35,7 @@ public class EmailServiceImpl  {
             System.out.println("Message is ready");
             Transport.send(msg);
 
-            System.out.println("EMail Sent Successfully!!");
+            System.out.println("Email Sent Successfully!!");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -40,10 +44,7 @@ public class EmailServiceImpl  {
 
 
     public static  void sendEmailToAdmin(String message) {
-        final String fromEmail = "@gmail.com";
-        final String password = "k";
 
-        final String toEmail = "@gmail.com";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host

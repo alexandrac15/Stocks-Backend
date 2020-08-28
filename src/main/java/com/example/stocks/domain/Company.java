@@ -3,6 +3,7 @@ package com.example.stocks.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Entity
@@ -181,6 +182,7 @@ public class Company {
         this.url = url;
     }
     @JsonIgnore
+    @Transactional
     public List<MLModel> getModels() {
         return models;
     }
