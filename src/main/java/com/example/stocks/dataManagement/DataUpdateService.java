@@ -126,7 +126,7 @@ public class DataUpdateService implements Runnable {
         if(this.predictionModelPath != null) {
             try {
                 g = new Graph(updatePredictions());
-            } catch (Runt+imeException | ParseException e) {
+            } catch (RuntimeException | ParseException e) {
                 System.out.println(e.getMessage());
                 EmailServiceImpl.sendEmailToAdmin(e.getMessage());
                 return;

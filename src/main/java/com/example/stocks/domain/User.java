@@ -1,13 +1,18 @@
 package com.example.stocks.domain;
 
+import org.springframework.beans.factory.support.ManagedSet;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_id")
     int id;
     @Column(name="googleUserId")
     private String googleUserId;
@@ -15,6 +20,16 @@ public class User {
     private String name;
     @Column(name = "email")
     private String email;
+
+    @ManyToMany(
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "tracked_companies",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "id") } )
+    private List<Company> trackedCompanies = new ArrayList<>();
 
 
 
@@ -57,6 +72,18 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Company> getTrackedCompanies() {
+        return trackedCompanies;
+    }
+
+    public void setTrackedCompanies(List<Company> trackedCompanies) {
+        this.trackedCompanies = trackedCompanies;
+    }
+
+    public void addTrackedCompany(Company trackedCompany){
+        this.trackedCompanies.add(trackedCompany);
     }
 
     @Override

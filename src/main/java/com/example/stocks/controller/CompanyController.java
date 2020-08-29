@@ -5,6 +5,7 @@ import com.example.stocks.domain.Company;
 import com.example.stocks.domain.Graph;
 
 import com.example.stocks.domain.Pair;
+import com.example.stocks.domain.User;
 import com.example.stocks.notification.EmailService;
 import com.example.stocks.notification.EmailServiceImpl;
 import com.example.stocks.repositories.CompanyRepository;
@@ -57,7 +58,7 @@ public class CompanyController {
     }
 
    @GetMapping("/graph/prediction/{idCompany}/{previousDays}")
-   public Graph getChart(@PathVariable  int idCompany, @PathVariable int previousDays) throws IOException, ParseException {
+   public Graph[] getChart(@PathVariable  int idCompany, @PathVariable int previousDays) throws IOException, ParseException {
         //service this
         Company c = companyservice.getCompanyById(idCompany);
         Process p= ExecutorImpl.execute("loadData.py \""+c.getHistoricDataPath()+"\" "+previousDays);
@@ -65,13 +66,17 @@ public class CompanyController {
         Reader r=new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
         Graph graphH= r.readHistoricData(p);
         Graph graphP=predictionService.findPredictionByCompanyID(idCompany);
-        Graph chart= new Graph(graphH, graphP);
-        return chart;
+        return new Graph[]{graphH, graphP};
    }
 
     @GetMapping("/companies")
     List<Company> getCompanies() {
         return companyservice.getCompanies();
+    }
+
+    @GetMapping("/companies/likes/{idCompany}")
+    Integer getCompanies(@PathVariable  int idCompany) {
+        return companyservice.getCompanyById(idCompany).getTrackingUsers().size();
     }
 
     @GetMapping("/companies/home")

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "company")
@@ -42,6 +44,9 @@ public class Company {
     private Sector  sector;
     @Column(name = "country")
     private String  country;
+
+    @ManyToMany(mappedBy = "trackedCompanies")
+    private List<User> trackingUsers = new ArrayList<>();
 
     public Company() {
     }
@@ -189,6 +194,14 @@ public class Company {
 
     public void setModels(List<MLModel> models) {
         this.models = models;
+    }
+
+    public List<User> getTrackingUsers() {
+        return trackingUsers;
+    }
+
+    public void setTrackingUsers(List<User> trackingUsers) {
+        this.trackingUsers = trackingUsers;
     }
 
     @Override
