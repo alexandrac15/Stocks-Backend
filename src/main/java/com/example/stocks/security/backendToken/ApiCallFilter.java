@@ -23,7 +23,7 @@ public class ApiCallFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 
-        Optional<String> userFromToken = getUserFromToken(request);
+        Optional<String> userFromToken = getUserFromToken(request.getHeader("Authorization"));
         if (!userFromToken.isPresent()) {
 
             response.sendError(HttpStatus.UNAUTHORIZED.value());

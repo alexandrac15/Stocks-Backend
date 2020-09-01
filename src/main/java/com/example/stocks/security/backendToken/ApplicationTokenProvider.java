@@ -15,7 +15,7 @@ import java.util.Optional;
 @Component
 public class ApplicationTokenProvider {
 
-    private static final long EXPIRATION_TIME_SECONDS = 864000000;
+    private static final long EXPIRATION_TIME_SECONDS = 86400;
 
     private static final String SECRET = "2D7eAnYpd523fvVA35up+q5DXhnxR0/C0i4bUqefif89jQoZj4OPYqnOZGT4/PVM" +
             "jiQnH+RKRmmVKa8Mjj8i2SI55kCBj/zPb2St1nXUC8ltWkBVPuqVH0bH6gpy8DlK" +
@@ -32,18 +32,18 @@ public class ApplicationTokenProvider {
 
 
     private static String getNewPerishableToken(String userId) {
+        System.out.println(System.nanoTime());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis() + EXPIRATION_TIME_SECONDS);
         return Jwts.builder()
                 .setSubject(userId)
-                .setExpiration(new Date(System.nanoTime() + EXPIRATION_TIME_SECONDS))
+                .setExpiration(new Date((new Date()).getTime() + EXPIRATION_TIME_SECONDS))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
 
 
-    public static Optional<String> getUserFromToken(HttpServletRequest request) {
-
-        final String token = request.getHeader(HEADER_STRING);
-
+    public static Optional<String> getUserFromToken(String token) {
 
         if (token != null) {
             try {

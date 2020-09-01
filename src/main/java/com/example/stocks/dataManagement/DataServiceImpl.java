@@ -36,11 +36,8 @@ public class DataServiceImpl {
     public DataServiceImpl() {
 
     }
-    @Scheduled(cron = "00 33 19 * * 1-7")
+    @Scheduled(cron = "00 30 11 * * 1-6")
     public void updateHistoricalData() throws IOException {
-
-        //ia din baza de date toate companiile, ca sq stie ce fisiere trebuie sa updateze. ficare companie din db
-        // are un fisier in folderul historical_data
 
         List<Company> symbols=companyService.getCompanies();
         for (Company company: symbols){

@@ -2,6 +2,7 @@ package com.example.stocks.security.googleValidation;
 
 
 import com.example.stocks.domain.User;
+import com.example.stocks.repositories.UserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -9,6 +10,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,8 +25,7 @@ public class GoogleTokenVerifier {
     private static final JsonFactory jsonFactory = new JacksonFactory();
 
 
-    private static final String CLIENT_ID = "" ;
-
+    private static final String CLIENT_ID = "395904016915-63lfd66bcv9urj4olbg0riu94s8o90uo.apps.googleusercontent.com" ;
 
     GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
             .setAudience(Collections.singletonList(CLIENT_ID))

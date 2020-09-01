@@ -21,7 +21,7 @@ public class GoogleLoginFilter implements Filter {
     private GoogleTokenVerifier googleTokenVerifier;
 
     @Autowired
-    UserRepository repo;
+    UserRepository userRepo;
 
     // Filtrul pentru localhost:8080/login.
     // Extrage tokenul de Google trimis din frontend, il valideaza, genereaza un token nou de backend pe care il trimite inapoi la frontend
@@ -48,12 +48,11 @@ public class GoogleLoginFilter implements Filter {
 
 
                     User returnedUser = optionalReturnedUser.get();
-                    repo.save(returnedUser);
-
+                    if(userRepo.findByGoogleUserId(returnedUser.getGoogleUserId()) == null) {
+                        userRepo.save(returnedUser);
+                    }
 
                     ApplicationTokenProvider.addAuthentication(response, returnedUser.getGoogleUserId());
-
-
 
                     return;
                 }

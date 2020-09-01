@@ -69,9 +69,48 @@ public class CompanyController {
         return new Graph[]{graphH, graphP};
    }
 
+    @PostMapping("/graphs/prediction/{previousDays}")
+    public ArrayList<Graph[]>  getChart(@RequestBody  ArrayList<Integer> idCompanies, @PathVariable int previousDays) throws IOException, ParseException {
+
+        ArrayList<Graph[]> returnedgraphs = new ArrayList<>();
+
+        for(Integer compId : idCompanies){
+
+            Company c = companyservice.getCompanyById(compId);
+            Process p= ExecutorImpl.execute("loadData.py \""+c.getHistoricDataPath()+"\" "+previousDays);
+            System.out.println("a"+c.getHistoricDataPath());
+            //Graph graphP=predictionService.findPredictionByCompanyID(compId);
+            ArrayList<Float> vals = new ArrayList<Float>();
+            vals.add(new Float(12.3));
+            vals.add(new Float(13.3));
+            vals.add(new Float(14.3));
+            Graph graphP = new Graph(vals);
+            Reader r=new ReaderImpl();   ///MAKE THEM STATIC OR SMTH
+            Graph graphH= r.readHistoricData(p);
+            returnedgraphs.add(new Graph[]{graphH, graphP});
+
+        }
+
+        return returnedgraphs;
+
+    }
+
+
     @GetMapping("/companies")
     List<Company> getCompanies() {
         return companyservice.getCompanies();
+    }
+
+    @PostMapping("/companies")
+    List<Company> getCompanies(@RequestBody ArrayList<Integer> companiesIds) {
+
+        List<Company> returned = new ArrayList<>();
+
+        for(Integer compId : companiesIds)
+         {
+            returned.add(companyservice.getCompanyById(compId));
+         }
+        return returned;
     }
 
     @GetMapping("/companies/likes/{idCompany}")
@@ -189,7 +228,7 @@ public class CompanyController {
        String s=JsonManipulationUtilities.getJsonFromFile("C:\\Users\\aalex\\Desktop\\alo.txt");
        return s;
    }
-
+   
 }
 
 

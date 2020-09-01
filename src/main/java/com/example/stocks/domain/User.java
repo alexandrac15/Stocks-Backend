@@ -20,6 +20,8 @@ public class User {
     private String name;
     @Column(name = "email")
     private String email;
+    @Column(name = "role")
+    private String role;
 
     @ManyToMany(
             cascade = {CascadeType.ALL},
@@ -84,6 +86,18 @@ public class User {
 
     public void addTrackedCompany(Company trackedCompany){
         this.trackedCompanies.add(trackedCompany);
+    }
+
+    public void removeTrackedCompany(Company trackedCompany){
+        this.trackedCompanies.remove(trackedCompany);
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

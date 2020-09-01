@@ -1,6 +1,7 @@
 package com.example.stocks.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -46,6 +47,7 @@ public class Company {
     private String  country;
 
     @ManyToMany(mappedBy = "trackedCompanies")
+    @JsonIgnore
     private List<User> trackingUsers = new ArrayList<>();
 
     public Company() {

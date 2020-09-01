@@ -26,6 +26,8 @@ public class Sector {
     //@JsonManagedReference
     private List<Company> companies=new ArrayList<>();
     //private List<Company> companies = new ArrayList<>();
+
+    @JsonIgnore
     private String defaultModelpath;
 
 
